@@ -8,3 +8,32 @@ VimScript (vimL)
 
 Not all vim automation requires the full power of scripting. 
 
+Abbreviations 
+:abbreviate seq0 "expand this word"
+:abbreviate can also take <C-I> commands as well 
+
+- if you type :abbreviate or :ab  without an arg; you will get a list of the active abbreviations 
+- to remove an abbreviation use :unabbreviate <theabbreviationmnemonic> 
+- to remove all abbreviations use :abclear
+
+caveats: abbreviations work in both insert mode and command mode. 
+         To deactivate them type a literal <CTRL-V> before the abbreviation 
+         For example: 
+          :abbreviate ^V--c
+
+better Options -> iabbrev and cabbrev where i (insert) and c (command)
+
+Computed Abbreviations 
+  - Don't have to be fixed 
+    :iabbr <expr> TS strftime("%c") -> treat this exp as a peice of vimscript which works like unix stftime
+      Whenever I type TS execute strftime("%c") (get appropriate timestamp)
+
+      The time is TS (it will expand the time)
+      The time is Fri 16 Nov 2018 07:49:02 PM EST
+
+  - Or have PPP to the last yanked text: 
+    :iabbr <expr> PPP getreg('') - what I yanked and is present in the register paste when I write PPP enter 
+
+  - Have <^^> insert the contents of the preceding non-empty line: 
+    :iabbr <expr> ^^ getline(search('\S\_.*n\_.*\%#','b'))
+
