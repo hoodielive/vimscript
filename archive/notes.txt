@@ -1,0 +1,10 @@
+VimScript (vimL)
+
+  - Make vim do what you need or want it to do. 
+  - Modify and extend vim.
+  - Vim is a programmable editor.
+  - Create new tools using this language.
+  - Hook your tools into vim. 
+
+Not all vim automation requires the full power of scripting. 
+
