@@ -267,3 +267,166 @@ Comments
     " This is a comment 
 
   Can be place anywhere a string not expected 
+
+  Combine comment and string 
+
+  echo "This is a string " | "This is a comment 
+
+Vim comments can be hard to detect 
+So maybe add a more familar marker 
+
+call Setup(0) # Arg means: interactive mode == false 
+call Setup(0) # // Arg means: interactive mode == false 
+
+To configure a more common commenting convention
+
+Variables 
+
+Use the 'let' keyword 
+Vars can store numbers, strings, lists, dictionaries or function refs: 
+Dynamically tyepd
+Takes type from value and can't be changed
+
+  let name = "larry"
+  let height = 5'7
+  let editors - ["VIM", "EMACS", "VSCODE"]
+  let duration = { "VIM": "Best editor", "EMACS" : "Best editor too lol"}
+  let task = function('Teach')
+
+Value assignment also assigns varaible a (static) type: 
+  Can't change that type once assigned 
+
+  let duration = 90 " Error: rvalue is not a dictionary
+
+You can be destroyed and recreated:
+  unlet duration 
+  let duration = 90 
+
+Variable Scoping is Hungarian: 
+
+Prefix Scope 
+g:varname Global 
+s:varname Local to the script file 
+w:varname Local to current window
+t:varname Local to current tab page
+b:varname Local to current buffer
+l:varname Local to current function 
+a:varname Funcation argument 
+v:varname Vim predefined variable 
+
+NO prefix means var scoped to surrounding function or Global, if not a function (give a prefix)
+
+Each scope name (b: w: : etc) also a symbol table 
+
+So: 
+  g:varname 
+
+Is really just shorthand for: 
+  g:['varname']
+
+
+So you can manipulate entire var namespaces:
+  "# Delete all variables belonging to current buffer ... 
+      for varname in keys(b:)
+          unlet b:[varname]
+      endfor
+
+Also pseudovariables for other kinds of containers: 
+
+Pseudovar       aliasedto                      Example 
+&varname        Vim option                     let &tabstop = 4
+&l:varname      Local Vim option               let &l:matchpairs .= '<:>'
+&g:varname      Global Vim option              let &g:digraph -!&g:digraph 
+@varname        Vim register                   let @/ = ""
+$varname        Environment variable           echo $HOME 
+
+* like saying set 
+
+Expressions
+Assignment: = += -= .=
+Ternary operator: condition ? expr : expr 
+Logical && || 
+Comporator:  == != > >= < <=
+Pattern match: =~ !~
+Referential equality is isnot 
+Additive: + - . 
+Multiplicative: * / %
+Unary: ! + -
+
+All Comporators do both string and numeric comparison 
+
+Decides by examining arg types 
+
+String comparisons honor ignorecase:
+  but can be explicitly marked case-sensitive 
+  or case-insensitive 
+    (append a ?): 
+
+
+  if name ==? 'Batman'
+      echo "I'm Batman"
+  elseif name ==# 'ee cummings'
+      echo ":-( i died b4 sms cos i wd hv lvd txtng"
+  endif
+
+  for filenum in range(filecount)
+    "Show progress
+    echo (filenum / filecount * 100) . '%done'
+
+    "Make Progress
+    call process_file(filenum)
+  endfor
+
+  for result in result_list 
+    let sum += result 
+  endfor 
+  echo "Sum was: " . sum
+
+
+Control structures: 
+  
+  if condition 
+    statements() 
+  elseif other_condition 
+    other_statements() 
+  else
+    still_other_statements() 
+  endif 
+
+  # While loop 
+  while condition 
+    statements() 
+  endwhile 
+
+  # For loop 
+  for varname in list 
+    statements() 
+  endfor 
+
+  Parallel iteration:
+    
+    for [var1, var2, etc] in listoflists 
+      statements() 
+    endfor
+
+    For example:
+
+    let g:words = { 1: "one ", 2: "two", 3: "many", 4: "lots" }
+
+    for [key, val] in items(g:words)
+      echo key . ': ' . val 
+    endfor
+
+
+   # short circuit while or for lopps 
+
+    for number in list_of_numbers 
+      if number < 0 
+        continue  # go to next iteration 
+      elseif number > 9 
+        break # jump out of loop - exit loop completely
+      endif 
+      echo number 
+    endfor
+
+
