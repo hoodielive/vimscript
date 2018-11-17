@@ -37,3 +37,60 @@ Computed Abbreviations
   - Have <^^> insert the contents of the preceding non-empty line: 
     :iabbr <expr> ^^ getline(search('\S\_.*n\_.*\%#','b'))
 
+Maps
+- creates a sequence that is expanded as soon as typed 
+- a macro 
+- Can specify maps for specific modes 
+- Insert, Command-line, Normal, Visual, etc. 
+- Typically placed in .vimrc
+
+Insertion Maps 
+- directly replacing an abbreviation 
+- use instead of abbreviations 
+
+:imap ww http:// 
+:imap ee @gmail.com 
+:imap ;b <blockquote><cite><CR></cite></blockquote><ESC>0
+
+Now, if you type LHS.. 
+...vim inserts RHS instead
+
+- It expands automatically when the phrase is typed
+- Know when to use abbreviations and when to use mappings 
+- maps are better for insertion mode :imap <TAB> <C-N>
+  - Tab now acts like Completion 
+
+Normal Maps (normal mode)
+- delete a paragraph dip (delete interior paragraph)
+Put what if you wanted to delete hundreds of lines ? 
+
+  :nmap X dip  #X does do something else, but you have to judge by sessions
+  :nmap v <C-V> # get into Visual mode in normal mode
+  :nmap <Space> <PageDown> - map the space bar to page down 
+  :nmap <DOWN> :next<CR> (the down button goes to the next file)
+  :nmap <UP>  :prev<CR> (the up button goes up a file)
+
+CommandLine Maps 
+
+  - :w ~/backup/latest<cr>
+
+  add to .vimrc 
+  :cmap wb :w ~/backup/latest<cr> # makes it permanent
+  :cmap *** **/* # simplify subdirectory tours
+    :next examples/**/*.c 
+
+Other kinds of maps in addition to imap, nmap and cmap
+ - omap
+ - xmap
+ - smap 
+ - vmap 
+ - map!
+ - map
+ - lmap 
+
+:help :map-modes 
+
+:vmap (visual mode map) - probably the most useful 
+
+For example, fix <BS>/<DEL> in Visual block mode 
+:vmap <BS> x 
