@@ -430,3 +430,39 @@ Control structures:
     endfor
 
 
+# Functions: 
+
+Over 200 of them (Built in Functions)
+  Covering: 
+    - String manipulation 
+    - list and dictionary manipulation 
+    - variable 
+    - option
+    - buffer
+    - window introspection 
+    - cursor control 
+    - window access
+    - buffer access
+    - window modification 
+    - buffer modification 
+    - system commands 
+    - text and command completion 
+    - spell-checking 
+    - syntax highlighting 
+    - interactive I/O
+    :help function-list 
+
+String Functions 
+-> compute length of string 
+  let len = strlen(str) 
+
+-> retrieve a substring: 
+  let substring = strpart(str, startidx, length)
+  let tail = strpart(str, startidx)
+
+-> Or, using end-points, instead of start+length: 
+  let substring = str[startidx : endidx]
+  let tail = str[startidx:   ]
+  let head = str[    : endix ]
+
+
