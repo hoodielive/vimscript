@@ -171,3 +171,99 @@ Intro most of the language:
 
 http://vim.sourceforge.net/scripts 
 https://www.ibm.com/developerworks/library/l-vim-script-1/
+
+Convention: 
+
+Five ways to execute Vim scripts 
+Simplest: put them in '.vim' file 
+..and then execute it with :source 
+
+:source ./scriptfile.vim 
+
+
+Or 
+
+:source % (this file)
+
+Or anywhere in the the vim runtime path 
+$VIMRUNTIME 
+:runtime scriptfile.vim (vim will look through this path and find the file and source it) typically ~/.vim 
+
+Or 
+:call MyBackupFunc(expand('%'), { 'all': 1, 'save': 'recent'})
+
+Or, to save typing after the colon 
+create a colon command: 
+
+:command  SF source scriptfile.vim 
+:command -nargs=1 MBF call MyBackupFunc(expand(<q-args>))
+
+
+Even more useful is triggering a command form Normal mode...
+Create a map to type it for you
+:nmap ;s :source scriptfile.vim<CR>
+:nmap \b :call MyBackupFunc(expand('%'), { 'all': 1 })<CR>
+
+And for the very least effor 
+Have vim invoke them automatically when event occurs (callback)
+
+  :autocmd BufReadPost *.txt source scriptfile.vim # when you enter a buffer
+  :autocmd WinLeave* call MyBackupFunc(expand('%')) # when you exit a window (even if you move your cursor)
+  outside of the window!
+
+
+All statements terminated by a newline:
+  echo "Starting.."
+  call Phase(1)
+  call Phase(2)
+  echo "Done"
+
+To continue accross multiple lines., start next line with backslash (\)
+    let full_name = 
+    \ first_name . ' ' . middle_initial . ' ' . family_name 
+
+To put 2 statements on one line, separate with vertical bar: 
+
+  echo "Starting..." | call Phase(1) | call Phase(2) | echo "Done"
+
+BTW, every colon command: 
+
+  :set expandtabs 
+  :%retab!
+  :write 
+  .. is a Vimmish statement 
+
+  Leading colon is allow in Vim Script, but not required: 
+
+    function! Tidy_and_save() 
+        set expandtabs 
+        %retab!
+        write
+    endfunction
+
+Values 
+
+Four built-in types: 
+1. Strings 
+2. Number 
+3. List 
+4. Dictionary
+5. Floating points (7.4)
+
+Corresponding literal value declarators: 
+  Integer constant  999 999e01 0777 0xFACADE
+  Metasyntaxed string "your \"text\":\x2D \<C-Z> and backslash \\"
+  Literal string 'you''re text here: \not special'
+  List [1,2,3]
+  Dictionary { 'a': 1, 'b':2, 'c': '3PO' }
+
+:help expr9
+
+Comments 
+  Start with quote (")
+
+  Run to end-of-file: 
+
+    " This is a comment 
+
+  Can be place anywhere a string not expected 
