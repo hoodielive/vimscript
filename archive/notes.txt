@@ -94,3 +94,80 @@ Other kinds of maps in addition to imap, nmap and cmap
 
 For example, fix <BS>/<DEL> in Visual block mode 
 :vmap <BS> x 
+
+Map expansions re-expanded, if neccessary 
+
+Occasionally useful 
+nmap X dip 
+nmap Y XO[Paragraph deleted here]<ESC>:center<CR> # Pull from X mapping insert a Paragraph was deleted here, 
+       go back to normal mode and put cursor to center and return
+
+Can even be recursive: 
+  :nmap X 0i# <ESC>jx # DONT DO THIS
+
+  goto col 0 and insert a # character and a space and an escape and go down the line and do an x command again
+
+Unremappable maps 
+:nmap v <C-V>
+:nmap <C-V> v 
+
+# DAMN is wish that would work, i've always thought that block V and character v mappings needed to be swapped. 
+
+But fret not, for there is a way - those other mappings would not work because vim will detect that you are 
+doing some infinite recursions between two mappings. Rather use: 
+nnoremap or inoremap instead
+
+:nnoremap v <C-V>
+:nnoremap <C-V> v 
+
+:inoremap apo apok@somewhere
+:inoremap fuk fuckoff@somewhere.com
+
+Vim Scripting Basics 
+
+- Maps are excellent facility until... 
+
+  - you need something more complicated 
+  - then they become tedious to construct 
+  - and very hard to maintain 
+
+  :vmap aa VGo1G
+
+  :nmap X  0i#<SPACE><ESC>jX 
+
+  :imap \p <p><CR></p><ESC>O<TAB>
+
+  :nmap ;y :exe"syntax\<SPACE>"
+           \.(exists('syntax_on')?'off':'enable')<CR>
+
+
+So vim has its own scripting language 
+:vmap <expr> aa Select_Entire_File() 
+:nmap X :call Comment_To_EOF() 
+:imap <expr> \p Insert_Balanced_Tags('p')
+:nmap ;y :call Toggle_Syntax()
+
+Vim Script is nearly fully featured:
+
+  - variables 
+  - expressions 
+  - control structs 
+  - built-in functions 
+  - user-defined functions 
+  - variadiac argument lists 
+  - function references
+  - lists
+  - dictionaries 
+  - I/O
+  - pattern matching
+  - buffer and window access and control 
+  - exceptions 
+  - OO
+  - intergrated debugger 
+  - etc., etc.
+
+Intro most of the language:
+:help vim-script-intro
+
+http://vim.sourceforge.net/scripts 
+https://www.ibm.com/developerworks/library/l-vim-script-1/
